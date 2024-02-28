@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 
 const font = Poppins({ subsets: ["latin"], weight: ["600"] });
 
-const OrgSidebar = () => {
+export const OrgSidebar = () => {
   const searchParams = useSearchParams();
   const favorites = searchParams.get("favorites");
   return (
@@ -81,5 +81,3 @@ const OrgSidebar = () => {
     </div>
   );
 };
-
-export default OrgSidebar;
