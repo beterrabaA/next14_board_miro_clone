@@ -3,8 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { toast } from "sonner";
+
 import { useAuth } from "@clerk/nextjs";
 import { formatDistanceToNow } from "date-fns";
+
+import { api } from "@/convex/_generated/api";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
 import { MoreHorizontal } from "lucide-react";
 
@@ -37,6 +42,23 @@ export const BoardCard = ({
   const createdAtLabel = formatDistanceToNow(board._creationTime, {
     addSuffix: true,
   });
+
+  const { mutate: onFavorite, loading: loadingFavorite } = useApiMutation(
+    api.board.favorite
+  );
+  const { mutate: onUnFavorite, loading: loadingUnFavorite } = useApiMutation(
+    api.board.unFavorite
+  );
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      onUnFavorite({ id: board._id }).catch((e) => toast.error(e.message));
+    } else {
+      onFavorite({ id: board._id, orgId: board.orgId }).catch((e) =>
+        toast.error(e.message)
+      );
+    }
+  };
   return (
     <Link href={`/board/${board._id}`}>
       <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden">
@@ -60,9 +82,9 @@ export const BoardCard = ({
         <Footer
           authorLabel={authorLabel}
           createdAtLabel={createdAtLabel}
-          disabled={false}
+          disabled={loadingFavorite || loadingUnFavorite}
           isFavorite={isFavorite}
-          onClick={() => {}}
+          onClick={() => toggleFavorite()}
           title={board.title}
         />
       </div>
