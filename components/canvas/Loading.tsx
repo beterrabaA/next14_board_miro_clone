@@ -1,8 +1,8 @@
 import { Loader } from "lucide-react";
 
-import { Info } from "@/components/boardId/Info";
-import { Participant } from "@/components/boardId//Participant";
-import { Toolbar } from "@/components/boardId/ToolBar";
+import { Info } from "@/components/canvas/Info";
+import { Participant } from "@/components/canvas/Participant";
+import { Toolbar } from "@/components/canvas/ToolBar";
 
 export const Loading = () => {
   return (
