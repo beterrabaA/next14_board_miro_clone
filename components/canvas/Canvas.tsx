@@ -38,6 +38,7 @@ import { Participant } from "@/components/canvas/Participant";
 import { Toolbar } from "@/components/canvas/ToolBar";
 import { LayerPreview } from "@/components/canvas/cursors/LayerPreview";
 import { SelectionBox } from "@/components/canvas/SelectionBox";
+import { SelectionTools } from "./SelectionTools";
 
 interface CanvasProps {
   boardId: string;
@@ -123,11 +124,11 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     []
   );
 
-  const unselectLayers = useMutation(({self,setMyPresence}) => {
+  const unselectLayers = useMutation(({ self, setMyPresence }) => {
     if (self.presence.selection.length > 0) {
       setMyPresence({ selection: [] }, { addToHistory: true });
     }
-  },[])
+  }, []);
 
   const resizeSelectedLayer = useMutation(
     ({ storage, self }, point: Point) => {
@@ -301,6 +302,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         undo={history.undo}
         redo={history.redo}
       />
+      <SelectionTools camera={camera} setLastUsedColor={setLastUsedColor} />
       <svg
         className="h-[100vh] w-[100vh]"
         onWheel={onWhell}
