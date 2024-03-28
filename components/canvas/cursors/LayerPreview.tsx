@@ -11,6 +11,8 @@ import { LayerType } from "@/types";
 import { Path } from "@/components/canvas/layers/Path";
 import { Note } from "@/components/canvas/layers/Note";
 import { Rectangle } from "@/components/canvas/layers/Retangle";
+import { Text } from "@/components/canvas/layers/Text";
+import { Ellipse } from "@/components/canvas/layers/Ellipse";
 
 interface LayerPreviewProps {
   id: string;
@@ -47,9 +49,23 @@ export const LayerPreview = memo(
           />
         );
       case LayerType.Text:
-        return <p>Text</p>;
+        return (
+          <Text
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
       case LayerType.Ellipse:
-        return <p>Ellipse</p>;
+        return (
+          <Ellipse
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
       case LayerType.Rectangle:
         return (
           <Rectangle
